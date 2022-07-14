@@ -15,8 +15,10 @@ export async function getAll() {
 export async function getById(questionId: number) {
     const questions = await prisma.question.findUnique({
         where: {id: questionId},
-        select: {
-            Answer: {where: {questionId: questionId}}
+        include: {
+            Answer: {
+                select: {answer: true}
+            }
         }
     });
     return questions;
